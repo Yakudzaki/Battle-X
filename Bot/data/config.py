@@ -1,1 +1,4 @@
+import os
 
+TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN')
+ADMINS = [1644643904, 5548351085]
