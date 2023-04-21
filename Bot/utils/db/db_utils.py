@@ -16,7 +16,3 @@ class Users(Model):
     class Meta:
         database = db
         
-# Сохранение записи
-
-db.create_tables([Users])
-print('yes')
