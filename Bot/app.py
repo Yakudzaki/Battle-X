@@ -7,6 +7,10 @@ from loader import dp, bot
 import filters
 from loguru import logger
 from utils.db.db_utils import *
+import aioredis
+from aiogram.dispatcher.storage import MemoryStorage
+from aiogram.contrib.fsm_storage.redis import RedisStorage2
+
 
 
 async def main():
