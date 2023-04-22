@@ -6,7 +6,8 @@ db = SqliteDatabase('utils/db/database.db')
 
 # Создание модели с DateTimeField
 class Users(Model):
-    id = IntegerField(unique=True, null=False, primary_key=True)
+    id = IntegerField(unique=True, null=False)
+    bu_id = IntegerField(unique=True, null=False)
     nickname = CharField(20, default='Игрок')
     balance = IntegerField(null=False, default=0)
     level = IntegerField(default=1)
@@ -17,3 +18,4 @@ class Users(Model):
     class Meta:
         database = db
 
+db.create_tables([Users])

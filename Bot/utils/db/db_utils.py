@@ -7,8 +7,12 @@ def create_user(id):
         id = id
     )
 
-def user_exists(id):
+def user_exists(id, bu_id=False):
+    if bu_id:
+        return Users.select('bu_id').where(Users.id == id).exists()
     return Users.select('id').where(Users.id == id).exists()
+
+
 
 def get_user(id):
     user = Users.select().where(Users.id == id).get()
@@ -29,3 +33,4 @@ def get_count_users():
 def add_ref_level(id):
     referrals_lvl = get_user(id).referrals
     Users.update(referrals=referrals_lvl + 1).where(Users.id == id).execute()
+
