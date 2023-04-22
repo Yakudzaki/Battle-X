@@ -2,9 +2,10 @@ from peewee import *
 from .models import Users
 
 
-def create_user(id):
+def create_user(id, bu_id):
     user = Users.create(
-        id = id
+        id = id,
+        bu_id = bu_id
     )
 
 def user_exists(id, bu_id=False):
