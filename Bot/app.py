@@ -8,8 +8,23 @@ import filters
 from loguru import logger
 from utils.db.db_utils import *
 
+
+async def main():
+    # Создаем подключение к Redis
+    redis = await aioredis.create_redis_pool('redis://localhost')
+
+    # Создаем объект RedisStorage2
+    storage = RedisStorage2(redis)
+
+    # Создаем объект Dispatcher с использованием MemoryStorage и RedisStorage2
+    dp = Dispatcher(bot, storage=storage)
+
+    # Запускаем бота
+    await executor.start_polling(dp, skip_updates=True)
+
+
 if __name__ == '__main__':
     print(get_all_balance())
     logger.info('Bot is started!')
-    executor.start_polling(dp, skip_updates=True)
+    main()
     logger.info('Bot shuts dowm!')
