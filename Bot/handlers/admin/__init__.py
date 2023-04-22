@@ -5,9 +5,9 @@
 # в итоге получится такой импорт: from .admin import dp
 
 
+from .admin import dp
+from .callback import dp
 
 
 
-
-
-#__all__ = ['dp']
+__all__ = ['dp']
