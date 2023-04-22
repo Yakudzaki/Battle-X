@@ -1,4 +1,9 @@
 import os
+from dotenv import load_dotenv
 
-TOKEN = os.environ.get('BOT_TOKEN')
+
+load_dotenv()
+
+TOKEN = str(os.getenv("BOT_TOKEN"))
 ADMINS = [1644643904, 5548351085]
+
