@@ -10,8 +10,9 @@ def create_user(id, bu_id):
 
 def user_exists(id, bu_id=False):
     if bu_id:
-        return Users.select('bu_id').where(Users.id == id).exists()
-    return Users.select('id').where(Users.id == id).exists()
+        return Users.select().where(Users.id == id).exists()
+    print('Yes')
+    return Users.select().where(Users.id == id).exists()
 
 
 
