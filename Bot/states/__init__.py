@@ -1,1 +1,1 @@
-from .states import test
+from .states import BombsState
