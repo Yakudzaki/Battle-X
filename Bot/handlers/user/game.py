@@ -18,6 +18,9 @@ async def game(message: types.Message, state: FSMContext):
     BombsState.next()
     field = generate(message.text)
     await message.answer('Минное поле', reply_markup=generate_field(field))
+    await state.finish()
 
-@dp.callback_query_handler(lambda call: call.data.startswith('Мины') and , state=BombsState.field)
+@dp.callback_query_handler(lambda call: call.data.startswith('Мины'), state=BombsState.field)
+async def game(message: types.Message, state: FSMContext):
+    await message.answer("Заглушка")
 
