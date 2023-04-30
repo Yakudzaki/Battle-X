@@ -13,11 +13,11 @@ def generate_field(field):
             a = field[(y * 5 + x) - 1]
             print((y * 5 + x) - 1)
             if a == 0:
-                line.append(InlineKeyboardButton(text='⬜️', callback_data=a))
+                line.append(InlineKeyboardButton(text='⬜️', callback_data=f'Мины {a} {(y * 5 + x) - 1}'))
             elif a == 1:
-                line.append(InlineKeyboardButton(text='🟩', callback_data=a))
+                line.append(InlineKeyboardButton(text='🟩', callback_data=f'Мины {a} {(y * 5 + x) - 1}'))
             else:
-                line.append(InlineKeyboardButton(text='💣', callback_data=a))
+                line.append(InlineKeyboardButton(text='💣', callback_data=f'Мины {a} {(y * 5 + x) - 1}'))
         result.append(line)
     return InlineKeyboardMarkup(inline_keyboard=result)
             

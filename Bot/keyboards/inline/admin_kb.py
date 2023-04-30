@@ -9,7 +9,7 @@ ikb_adm = InlineKeyboardMarkup(row_width=2,
         ],
         [
             InlineKeyboardButton(text='Управление юзерами ❗️', callback_data='Adm users'),
-            InlineKeyboardButton(text='Просмотреть репорты ⚠️', callback_data='Adm rep'),
+            InlineKeyboardButton(text='Репорты ⚠️', callback_data='Adm rep'),
             
         ]
     ]

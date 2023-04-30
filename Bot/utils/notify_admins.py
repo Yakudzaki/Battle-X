@@ -14,4 +14,3 @@ field = [
 async def on_startup(dp):
     for admin in ADMINS:
         await dp.bot.send_message(admin, 'Бот был запущен')
-        await dp.bot.send_message(admin, 'Тест', reply_markup=generate_field(field))
