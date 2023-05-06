@@ -7,14 +7,19 @@ from states import BombsState
 from utils.test import generate
 from utils.gen_field import generate_field
 from test import calculate
+from keyboards.inline.games_kb import games
+
+from utils.db.db_utils import get_user
 
 @dp.message_handler(Command('game'))
 async def game(message: types.Message):
-    await BombsState.rate.set()
-    await message.answer(
-        '⠀<b>Минное поле 💣</b>\n\n'
-        '<b>Выберите ставку</b>'
-    )
+    nickname = get_user(message.from_user.id).nickname
+    await message.answer(f'{nickname}, выберите одну из игр', reply_markup=games)
+
+@dp.callback_query_handler(lambda m: m.data == 'Minefield')
+async def minefield(call: types.CallbackQuery):
+    await call.message.answer()
+
 
 @dp.message_handler(state=BombsState.rate)
 async def game(message: types.Message, state: FSMContext):
@@ -26,10 +31,7 @@ async def game(message: types.Message, state: FSMContext):
     
     data = await state.get_data()
     rate = data.get('rate')
-    await message.answer(
-        '⠀<b>Минное поле 💣</b>\n\n'
-
-        '<b>Выберите кол-во бомб</b>')
+    await message.answer('<b>Выберите кол-во бомб</b>')
     
 
 @dp.message_handler(state=BombsState.count)
