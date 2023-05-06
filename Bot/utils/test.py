@@ -2,7 +2,7 @@ import random
 
 def generate(count):
     count = int(count)
-    if count < 5 or count > 24:
+    if count < 3 or count > 24:
         print('Error: Invalid count bombs')
         return 
     field = [random.randint(0, 1) for i in range(25)]
