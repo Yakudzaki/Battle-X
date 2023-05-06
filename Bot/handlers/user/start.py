@@ -6,6 +6,7 @@ from utils.db.db_utils import create_user, user_exists
 from utils.generate_bu_id import generate_id
 from keyboards.default.keyboard import markup
 
+
 # Сработает если юзера нет в бд
 @dp.message_handler(lambda m: user_exists(m.from_user.id) is False)
 async def start(message: types.Message):
