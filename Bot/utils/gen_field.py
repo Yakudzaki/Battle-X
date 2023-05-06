@@ -1,7 +1,7 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 # 0 - Неизвестно
-# 1 - Нету
+# 1 - Бомба
 # 2 - Бомба
 # 3 - Крестик
 

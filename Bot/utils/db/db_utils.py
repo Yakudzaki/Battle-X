@@ -22,7 +22,13 @@ def get_user(id):
 def deposite_user_balance(id, sum):
     balance = get_user(id).balance
     new_balance = balance + sum
-    Users.update(balance=new_balance).where(Users.id == id).execute()
+    Users.update(balance=new_balance).where(Users.id == int(id)).execute()
+
+
+def withdraw_user_balance(id, sum):
+    balance = get_user(id).balance
+    new_balance = balance - sum
+    Users.update(balance=new_balance).where(Users.id == int(id)).execute()
 
 def get_all_balance():
     sp = [user.balance for user in Users.select()]

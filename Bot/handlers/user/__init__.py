@@ -3,5 +3,6 @@ from .start import dp
 from .help import dp
 from .game import dp
 from .menu import dp
+from .minefield import dp
 
 __all__ = ['dp']

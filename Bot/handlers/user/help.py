@@ -8,7 +8,6 @@ from utils.db.db_utils import create_user, user_exists
 @dp.message_handler(CommandHelp())
 async def help(message: types.Message):
     user_id = message.from_user.id
-    create_user(user_id)
     await message.answer('⚙️ Вот список команд, которые вы можете использовать:'
     
     '/start - Запустить бота.'

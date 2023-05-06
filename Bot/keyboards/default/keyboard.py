@@ -6,8 +6,8 @@ from utils.db.db_utils import get_user
 
 markup = ReplyKeyboardMarkup(keyboard=[
     [
-        KeyboardButton('👾 Игры'),
-        KeyboardButton('🔐 Профиль')
+        KeyboardButton('🎮 Игры'),
+        KeyboardButton('📒 Профиль')
     ],
     [
         KeyboardButton('🛒 Пополнить'),
