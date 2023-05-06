@@ -12,5 +12,8 @@ markup = ReplyKeyboardMarkup(keyboard=[
     [
         KeyboardButton('🛒 Пополнить'),
         KeyboardButton('👥 Рефералы')
+    ],
+    [
+        KeyboardButton('📚 Помощь')
     ]
 ], resize_keyboard=True)
