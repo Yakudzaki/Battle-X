@@ -32,4 +32,9 @@ async def recharge_handler(message: types.Message):
 
 @dp.message_handler(text='👥 Рефералы')
 async def referrals_handler(message: types.Message):
-    await message.answer('Вы нажали на кнопку "👥 Рефералы"')
+    user = get_user(message.from_user.id)
+    await message.answer('<b>👥 Партнёрская программа 👥</b>\n\n'
+                        f'<b>🔢 Ваши партнёры</b> - <code>{user.referrals}</code> \n\n'
+                        f'<b>🔗 Ваша реферальная ссылка</b> - <code>https://t.me/FoYaGamesBot?start={user.bu_id}</code> \n\n'
+                         '<b>🎁 Приглашайте людей и зарабатывайте!</b> \n'
+                         '💰 Чем больше людей вы приглашаете - тем больше зарабатываете! Удачи!')
