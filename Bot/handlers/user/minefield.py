@@ -14,29 +14,29 @@ from utils.gen_field import generate_field
 
 @dp.callback_query_handler(lambda m: m.data == 'Minefield' or m.data == 'Мины заново')
 async def minefield(call: types.CallbackQuery):
-    await call.message.answer('Введите вашу ставку (Минимальная: 10 ₽, максимальная 1000 ₽)')
+    await call.message.answer('Введите вашу ставку (Минимальная: 10 ₽, Максимальная: 1000 ₽)')
     await BombsState.rate.set()
 
 @dp.message_handler(state=BombsState.rate)
 async def game(message: types.Message, state: FSMContext):
     rate = message.text
     if not rate.isdigit():
-        await message.answer('Пожалуйста введите число!')
+        await message.answer('<b>Введите число!<b>')
         return
     if get_user(message.from_user.id).balance < int(rate):
-        await message.answer('На вашем балансе не достаточно средств')
+        await message.answer('<b>На вашем балансе не достаточно средств!<b>')
         return
     withdraw_user_balance(message.from_user.id, int(rate))
     await state.update_data(rate=int(message.text))
     await BombsState.next()
 
-    await message.answer('<b>Выберите кол-во бомб</b>')
+    await message.answer('Выберите кол-во бомб (Минимум: 3, Максимум: 24)')
     
 
 @dp.message_handler(state=BombsState.count)
 async def game(message: types.Message, state: FSMContext):
     if not message.text.isdigit():
-        await message.answer('Пожалуйста введите число!')
+        await message.answer('<b>Введите число!</b>')
         return
     if 3 > int(message.text) or int(message.text) > 24:
         await message.answer('<b>Введите количество бомб в соответствии с ограничениями!</b>\n\n'
@@ -53,7 +53,7 @@ async def game(message: types.Message, state: FSMContext):
     await state.update_data(field=field)
 
     await message.answer(
-        '⠀<b>Минное поле 💣</b>\n\n'
+        '    <b>Минное поле 💣</b>\n\n'
         '➖➖➖➖➖➖➖\n'
         f'<b>💸 Ставка:</b> <code>{rate} ₽</code>\n'
         f'<b>❓ Кол-во бомб:</b> <code>{count} шт.</code>\n'
@@ -75,7 +75,7 @@ async def game(call: types.CallbackQuery, state: FSMContext):
         field[int(index)] = 2
         await state.update_data(field=field)
         await call.message.edit_text(
-            '⠀<b>Минное поле 💣</b>\n\n'
+            '    <b>Минное поле 💣</b>\n\n'
             '➖➖➖➖➖➖➖\n'
             f'<b>💸 Ставка:</b> <code>{rate} ₽</code>\n'
             f'<b>❓ Кол-во мин:</b> <code>{count} шт.</code>\n'
@@ -87,7 +87,7 @@ async def game(call: types.CallbackQuery, state: FSMContext):
         await state.finish()
         field[int(index)] = 3
         await call.message.edit_text(
-            '⠀<b>Минное поле 💣</b>\n\n'
+            '.   <b>Минное поле 💣</b>\n\n'
             '➖➖➖➖➖➖➖\n'
             f'<b>💸 Ставка:</b> <code>{rate} ₽</code>\n'
             f'<b>❓ Кол-во бомб:</b> <code>{count} шт.</code>\n'
