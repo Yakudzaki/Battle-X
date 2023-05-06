@@ -37,8 +37,10 @@ async def game(message: types.Message, state: FSMContext):
     if not message.text.isdigit():
         await message.answer('Пожалуйста введите число')
         return
-    if 5 > int(message.text) or int(message.text) > 24:
-        await message.answer('вы забанены за абьюз системы')
+    if 3 > int(message.text) or int(message.text) > 24:
+        await message.answer('<b>Введите количество бомб в соответствии с ограничениями!</b>\n\n'
+                             '<b>Максимум</b> - <code>24</code>\n'
+                             '<b>Минимум</b> - <code>3</code>')
         return
     await state.update_data(count=int(message.text))
     await BombsState.field.set()
@@ -53,11 +55,11 @@ async def game(message: types.Message, state: FSMContext):
         '⠀<b>Минное поле 💣</b>\n\n'
         '➖➖➖➖➖➖➖\n'
         f'<b>💸 Ставка:</b> <code>{rate} ₽</code>\n'
-        f'<b>❓ Кол-во мин:</b> <code>{count} шт.</code>\n'
+        f'<b>❓ Кол-во бомб:</b> <code>{count} шт.</code>\n'
         '➖➖➖➖➖➖➖\n'
         f'<b>💰 Множитель:</b> <code>0x</code>\n'
         f'<b>💣 Отгадано бомб:</b> <code>0 шт.</code>\n\n'
-        f'<b>Сумма выигрыша:</b> <code>0 ₽</code>\n', reply_markup=generate_field(field))
+        f'<b>💲 Сумма выигрыша:</b> <code>0 ₽</code>\n', reply_markup=generate_field(field))
 
 
 @dp.callback_query_handler(lambda m: len(m.data.split()) == 3, state=BombsState.field)
@@ -79,7 +81,7 @@ async def game(call: types.CallbackQuery, state: FSMContext):
             '➖➖➖➖➖➖➖\n'
             f'<b>💰 Множитель:</b> <code>{calculate(25 - count, field.count(2))}x</code>\n'
             f'<b>💣 Отгадано бомб:</b> <code>{field.count(2)} шт.</code>\n\n'
-            f'<b>Сумма выигрыша:</b> <code>{calculate(25 - count, field.count(2)) * rate} ₽</code>\n', reply_markup=generate_field(field))
+            f'<b>💲 Сумма выигрыша:</b> <code>{calculate(25 - count, field.count(2)) * rate} ₽</code>\n', reply_markup=generate_field(field))
     if int(cell) == 1:
         await state.finish()
         field[int(index)] = 3
@@ -87,7 +89,7 @@ async def game(call: types.CallbackQuery, state: FSMContext):
             '⠀<b>Минное поле 💣</b>\n\n'
             '➖➖➖➖➖➖➖\n'
             f'<b>💸 Ставка:</b> <code>{rate} ₽</code>\n'
-            f'<b>❓ Кол-во мин:</b> <code>{count} шт.</code>\n'
+            f'<b>❓ Кол-во бомб:</b> <code>{count} шт.</code>\n'
             '➖➖➖➖➖➖➖\n'
             f'<b>💰 Множитель:</b> <code>{calculate(25 - count, field.count(2))}x</code>\n'
             f'<b>💣 Отгадано бомб:</b> <code>{field.count(2)} шт.</code>\n'
