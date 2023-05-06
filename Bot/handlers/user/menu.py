@@ -3,6 +3,7 @@ from aiogram import types
 from loguru import logger
 from utils.db.db_utils import get_user
 from keyboards.inline.help_kb import help_adm
+from keyboards.inline.profile_kb import prof_kb
 
 @dp.message_handler(text='👾 Игры')
 async def games_handler(message: types.Message):
@@ -21,7 +22,7 @@ async def profile_handler(message: types.Message):
                         f'<b>🎮 <i>Level:</i> </b> <code>{user.level} lvl</code>\n'
                         f'<b>🕹️ <i>Сыграно игр:</i> </b> <code>{user.num_of_games} раз</code>\n'
                         f'<b>👥 <i>Рефералов:</i> </b> <code>{user.referrals} шт.</code>\n\n'
-                        f'<b>📅 <i>Дата регистрации:</i> </b> <code>{time.strftime("%Y-%m-%d %H:%M")}</code>')
+                        f'<b>📅 <i>Дата регистрации:</i> </b> <code>{time.strftime("%Y-%m-%d %H:%M")}</code>', prof_kb)
 
 
 
