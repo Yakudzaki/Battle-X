@@ -8,7 +8,7 @@ from data.config import ADMINS
 
 @dp.message_handler(Command('report'))
 async def report_handler(message: types.Message):
-    if len(message.text.split()) < 2:
+    if len(message.text.split()) > 1:
         cause = message.text.replace('/report ', '')
         tg_user = message.from_user
         db_user = get_user(tg_user.id)
