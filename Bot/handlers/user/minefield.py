@@ -7,6 +7,7 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Command, Text
 
 from keyboards.default.games_kb import games
+from keyboards.inline.user.mines_buttons import stavka_kb, bombs_kb
 from loader import dp
 from states import BombsState
 from utils.db.db_utils import get_user, withdraw_user_balance, deposite_user_balance
@@ -16,12 +17,12 @@ from time import sleep
 
 @dp.message_handler(Text('Минёр 💣'))
 async def minefield(message: types.Message):
-    await message.answer('Введите вашу ставку (Минимальная: 10 ₽, Максимальная: 1000 ₽)')
+    await message.answer('Введите вашу ставку (Минимальная: 10 ₽, Максимальная: 1000 ₽)', reply_markup=stavka_kb)
     await BombsState.rate.set()
 
 @dp.callback_query_handler(lambda m: m.data == 'Мины заново')
 async def minefield(call: types.CallbackQuery):
-    await call.message.answer('Введите вашу ставку')
+    await call.message.answer('Введите вашу ставку', reply_markup=stavka_kb)
     await BombsState.rate.set()
 
 @dp.message_handler(state=BombsState.rate)
@@ -33,7 +34,7 @@ async def game(message: types.Message, state: FSMContext):
     elif 10 < int(rate) > 1000:
         await message.answer(
             'Ой! Выберите ставку в соответствии с ограничениями\n'
-            '(Минимальная сумма - 10 ₽, максимальная - 1000 ₽)')
+            '(Минимальная сумма - 10 ₽, максимальная - 1000 ₽)', reply_markup=stavka_kb)
         return
     if get_user(message.from_user.id).balance < int(rate):
         await message.answer('<b>На вашем балансе не достаточно средств!</b>')
@@ -42,7 +43,7 @@ async def game(message: types.Message, state: FSMContext):
     await state.update_data(rate=int(message.text))
     await BombsState.next()
 
-    await message.answer('Выберите кол-во бомб (Минимум: 3, Максимум: 24)')
+    await message.answer('Выберите кол-во бомб (Минимум: 3, Максимум: 24)', reply_markup=bombs_kb)
     
 
 @dp.message_handler(state=BombsState.count)
@@ -53,7 +54,7 @@ async def game(message: types.Message, state: FSMContext):
     if 3 > int(message.text) or int(message.text) > 24:
         await message.answer('<b>Введите количество бомб в соответствии с ограничениями!</b>\n\n'
                              '<b>Максимум</b> - <code>24</code>\n'
-                             '<b>Минимум</b> - <code>3</code>')
+                             '<b>Минимум</b> - <code>3</code>', reply_markup=bombs_kb)
         return
     await state.update_data(count=int(message.text))
     await BombsState.field.set()
