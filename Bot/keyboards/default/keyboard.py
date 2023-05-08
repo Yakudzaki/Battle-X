@@ -10,10 +10,10 @@ markup = ReplyKeyboardMarkup(keyboard=[
         KeyboardButton('📒 Профиль')
     ],
     [
-        KeyboardButton('🛒 Пополнить'),
+        KeyboardButton('📚 Помощь')
         KeyboardButton('👥 Рефералы')
     ],
-    [
-        KeyboardButton('📚 Помощь')
-    ]
+
+
+
 ], resize_keyboard=True)
