@@ -21,9 +21,7 @@ async def profile_handler(message: types.Message):
 
 
 
-@dp.message_handler(text='🛒 Пополнить')
-async def recharge_handler(message: types.Message):
-    await message.answer('Пополнить')
+
 
 
 
