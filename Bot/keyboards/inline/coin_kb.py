@@ -10,7 +10,7 @@ coin_kb = InlineKeyboardMarkup(row_width=1,
             InlineKeyboardButton(text='Решка', callback_data='Монетка 1')
         ],
         [
-            InlineKeyboardButton(text='Забрать деньги', callback_data='Монетка приз')
+            InlineKeyboardButton(text='💸 Забрать деньги', callback_data='Монетка приз')
         ]
     ]
 )
