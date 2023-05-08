@@ -8,18 +8,23 @@ from utils.db.db_utils import get_user, withdraw_user_balance, deposite_user_bal
 from states import CoinState
 from keyboards.inline.coin_kb import coin_kb
 from aiogram.dispatcher import FSMContext
+import random
+
+
+sad_smails = ['😟', '😢', '😥', '😕', '😪', '😿', '🙁', '☹️', '😓']
+right_smails = ['🎉', '✅', '🥇', '👏', '👍', '🎊', '🥳', '🍾', '👑', '👌']
 
 @dp.message_handler(Command('coin'))
 async def coin(message: types.Message):
     await CoinState.rate.set()
     
-    await message.answer('<b>Введите ставку</b>')
+    await message.answer('<b>💰 Введите сумму ставки</b>')
     
-@dp.message_handler(Text('Монетка 💱'))
+@dp.message_handler(Text('Монетка 🪙'))
 async def coin(message: types.Message):
     await CoinState.rate.set()
     
-    await message.answer('<b>Введите ставку</b>')
+    await message.answer('<b>💰 Введите сумму ставки</b>')
 
     
 @dp.message_handler(state=CoinState.rate)
@@ -28,15 +33,15 @@ async def coin(message: types.Message, state: FSMContext):
     user_id = message.from_user.id
 
     if not rate.isdigit():
-        await message.answer('<b>Введите число</b>')
+        await message.answer('<b>⚠️ Введите число!</b>')
         return
     elif 5 < int(rate) > 1000:
-        await message.answer(
-            'Ой! Выберите ставку в соответствии с ограничениями\n'
-            '(Минимальная сумма - 5 ₽, максимальная - 1000 ₽)')
+        await message.answer('Введите сумму соблюдая ограничения\n'
+                             '(От 5 до 1000 ₽)')
         return
     elif get_user(message.from_user.id).balance < int(rate):
-        await message.answer('У вас недостаточно средств')
+
+        await message.answer(f'{random.choice(sad_smails)} <b>У вас недостаточно средств</b>!')
         return
     withdraw_user_balance(int(user_id), int(rate))
     await state.update_data(rate=int(rate), count=0)
@@ -44,13 +49,13 @@ async def coin(message: types.Message, state: FSMContext):
     await CoinState.next()
 
     await message.answer(
-        '🪙 Монетка\n\n'
+        '<i>👾 Игра - Монетка</i>\n\n'
         '➖➖➖➖➖➖➖\n'
         f'<b>💸 Ставка:</b> <code>{rate} ₽</code>\n'
-        '<b>Кол-во угаданно:</b> <code>0 раз</code>\n'
+        '<b>👀 Угаданно:</b> <code>0 раз</code>\n'
         '➖➖➖➖➖➖➖\n'
-        '<b>Множитель:</b> <code>0x</code>\n'
-        '<b>Итоговый приз:</b> <code>0 ₽</code>', reply_markup=coin_kb)
+        '<b>📈 Множитель:</b> <code>0x</code>\n'
+        '<b>🔥 Выйгрыш:</b> <code>0 ₽</code>', reply_markup=coin_kb)
 
 @dp.callback_query_handler(
     lambda m: m.data.startswith('Монетка') and not m.data.endswith('приз'), 
@@ -67,50 +72,50 @@ async def coin(call: types.CallbackQuery, state: FSMContext):
             count += 1
             await state.update_data(count=count)
             await call.message.edit_text(
-                '🪙 Монетка\n\n'
+                '<i>👾 Игра - Монетка</i>\n\n'
                 '➖➖➖➖➖➖➖\n'
                 f'<b>💸 Ставка:</b> <code>{rate} ₽</code>\n'
-                f'<b>Кол-во угаданно:</b> <code>{count} раз</code>\n'
+                f'<b>👀 Угаданно:</b> <code>{count} раз</code>\n'
                 '➖➖➖➖➖➖➖\n'
-                f'<b>Множитель:</b> <code>{count * 0.5}x</code>\n'
-                f'<b>Итоговый приз:</b> <code>{rate * (count * 0.5)} ₽</code>\n\n'
-                '<b>Правильно! Это был орел</b>', reply_markup=coin_kb)
+                f'<b>📈 Множитель:</b> <code>{count * 0.5}x</code>\n'
+                f'<b>🔥 Выйгрыш:</b> <code>{rate * (count * 0.5)} ₽</code>\n\n'
+                f'<b>{random.choice(right_smails)} Правильно! Это был орел!</b>', reply_markup=coin_kb)
         else:
             await state.finish()
             await call.message.edit_text(
-                '🪙 Монетка\n\n'
+                '<i>👾 Игра - Монетка</i>\n\n'
                 '➖➖➖➖➖➖➖\n'
                 f'<b>💸 Ставка:</b> <code>{rate} ₽</code>\n'
-                f'<b>Кол-во угаданно:</b> <code>{count} раз</code>\n'
+                f'<b>👀 Угаданно:</b> <code>{count} раз</code>\n'
                 '➖➖➖➖➖➖➖\n'
-                f'<b>Множитель:</b> <code>{count * 0.5}x</code>\n\n'
-                '<b>Не удача! Это была решка</b>', reply_markup=coin_kb
+                f'<b>📈 Множитель:</b> <code>{count * 0.5}x</code>\n\n'
+                f'<b>{random.choice(sad_smiles)} Не угадал! Это была решка</b>', reply_markup=coin_kb
             )
     else:
         if sign == random_sign:
             count += 1
             await state.update_data(count=count)
             await call.message.edit_text(
-                '🪙 Монетка\n\n'
+                '<i>👾 Игра - Монетка</i>\n\n'
                 '➖➖➖➖➖➖➖\n'
                 f'<b>💸 Ставка:</b> <code>{rate} ₽</code>\n'
-                f'<b>Кол-во угаданно:</b> <code>{count} раз</code>\n'
+                f'<b>👀 Угаданно:</b> <code>{count} раз</code>\n'
                 '➖➖➖➖➖➖➖\n'
-                f'<b>Множитель:</b> <code>{count * 0.5}</code>\n'
-                f'<b>Итоговый приз:</b> <code>{rate * (count * 0.5)}x ₽</code>\n\n'
-                '<b>Правильно! Это была решка</b>', reply_markup=coin_kb)
+                f'<b>📈 Множитель:</b> <code>{count * 0.5}</code>\n'
+                f'<b>🔥 Выйгрыш:</b> <code>{rate * (count * 0.5)}x ₽</code>\n\n'
+                f'<b>{random.choice(right_smails)} Правильно! Это была решка</b>', reply_markup=coin_kb)
             await state.update_data(count=count)
         else:
             await state.finish()
             await call.message.edit_text(
-                '🪙 Монетка\n\n'
+                '<i>👾 Игра - Монетка</i>\n\n'
                 '➖➖➖➖➖➖➖\n'
                 f'<b>💸 Ставка:</b> <code>{rate} ₽</code>\n'
-                f'<b>Кол-во угаданно:</b> <code>{count} раз</code>\n'
+                f'<b>👀 Угаданно:</b> <code>{count} раз</code>\n'
                 '➖➖➖➖➖➖➖\n'
-                f'<b>Множитель:</b> <code>{count * 0.5}x</code>\n\n'
+                f'<b>📈 Множитель:</b> <code>{count * 0.5}x</code>\n\n'
 
-                '<b>Не удача! Это был орел</b>', reply_markup=coin_kb)
+                f'<b>{random.choice(sad_smiles)} Не угадал! Это был орел</b>', reply_markup=coin_kb)
 
 @dp.callback_query_handler(
     lambda m: m.data == 'Монетка приз', 
@@ -120,4 +125,4 @@ async def coin(call: types.CallbackQuery, state=FSMContext):
     rate = data.get('rate')
     count = data.get('count')
     deposite_user_balance(call.from_user.id, rate * (count * 0.5))
-    await call.message.answer(f'Вы успешно забрали приз, +{rate * (count * 0.5)} ₽')
+    await call.message.answer(f'{random.choice(right_smails)} Вы успешно забрали выйгрыш, +{rate * (count * 0.5)} ₽')
