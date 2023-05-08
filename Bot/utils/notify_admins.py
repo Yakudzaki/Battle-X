@@ -13,4 +13,4 @@ field = [
 
 async def on_startup(dp):
     for admin in ADMINS:
-        await bot.send_message(admin, 'Бот запущен')
+        await bot.send_message(admin, '✅ Бот запущен!')
