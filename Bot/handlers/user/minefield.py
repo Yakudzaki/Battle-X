@@ -12,14 +12,14 @@ from states import BombsState
 from utils.db.db_utils import get_user, withdraw_user_balance, deposite_user_balance
 from utils.gen_field import generate_field
 
-@dp.message_handler(Text('Button Blast 💣'))
+@dp.message_handler(Text('Минёр 💣'))
 async def minefield(message: types.Message):
     await message.answer('Введите вашу ставку (Минимальная: 10 ₽, Максимальная: 1000 ₽)')
     await BombsState.rate.set()
 
 @dp.callback_query_handler(lambda m: m.data == 'Мины заново')
 async def minefield(call: types.CallbackQuery):
-    await call.message.answer('Введите вашу ставку (Минимальная: 10 ₽, Максимальная: 1000 ₽)')
+    await call.message.answer('Введите вашу ставку')
     await BombsState.rate.set()
 
 @dp.message_handler(state=BombsState.rate)
@@ -58,7 +58,7 @@ async def game(message: types.Message, state: FSMContext):
     await state.update_data(field=field)
 
     await message.answer(
-        '<b>Минное поле 💣</b>\n\n'
+        '<b>    Минное поле 💣</b>\n\n'
         '➖➖➖➖➖➖➖\n'
         f'<b>💸 Ставка:</b> <code>{format_int(rate)} ₽</code>\n'
         f'<b>❓ Кол-во бомб:</b> <code>{count} шт.</code>\n'
