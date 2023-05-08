@@ -30,10 +30,15 @@ async def game(message: types.Message, state: FSMContext):
     if not rate.isdigit():
         await message.answer('<b>Введите число!</b>')
         return
+    elif 10 < int(rate) > 1000:
+        await message.answer(
+            'Ой! Выберите ставку в соответствии с ограничениями\n'
+            '(Минимальная сумма - 10 ₽, максимальная - 1000 ₽)')
+        return
     if get_user(message.from_user.id).balance < int(rate):
         await message.answer('<b>На вашем балансе не достаточно средств!</b>')
         return
-    withdraw_user_balance(message.from_user.id, int(rate))
+    withdraw_user_balance(int(message.from_user.id), int(rate))
     await state.update_data(rate=int(message.text))
     await BombsState.next()
 
