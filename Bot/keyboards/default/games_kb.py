@@ -4,12 +4,18 @@ games = ReplyKeyboardMarkup(row_width=2,
     keyboard=[
         [
             KeyboardButton(text='Минёр 💣'),
-            KeyboardButton(text='Трейд 📊'),
+            KeyboardButton(text='Трейд 📊')
+        ],
+        [
             KeyboardButton(text='Монетка 💱'),
-            KeyboardButton(text='Классик 🎫'),
+            KeyboardButton(text='Классик 🎫')
+        ],
+        [
             KeyboardButton(text='Dice ↕️'),
-            KeyboardButton(text='Кости 🎲'),
-            KeyboardButton(text='Дэуль 🔫')
+            KeyboardButton(text='Кости 🎲')
+        ],
+        [
+            KeyboardButton(text='Эдуль 🔫')
         ],
     ], input_field_placeholder='Выберите игру', resize_keyboard=True, one_time_keyboard=True
 )

@@ -1,4 +1,4 @@
-import handlers
+import shedulers, handlers
 
 from aiogram import executor, types
 from loader import dp, bot

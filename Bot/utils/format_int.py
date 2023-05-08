@@ -1,2 +1,2 @@
 
-format_int = lambda number: '{:,}'.format(number).replace(',', '.')
+format_int = lambda number: '{:,}'.format(int(number)).replace(',', '.')

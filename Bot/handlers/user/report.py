@@ -9,12 +9,12 @@ from data.config import ADMINS
 @dp.message_handler(Command('report'))
 async def report_handler(message: types.Message):
     if len(message.text.split()) > 1:
-        cause = message.text.replace('/report ', '')
+        cause = message.text.split()[1:]
         tg_user = message.from_user
         db_user = get_user(tg_user.id)
         
         for admin in ADMINS:
-            await bot.send_message(f'Пришел репорт от <a href='tg://user?id={tg_user.id}'>{tg_user.first_name}</a>!'
+            await bot.send_message(admin, f"Пришел репорт от <a href='tg://user?id={tg_user.id}'>{tg_user.first_name}</a>!"
                              f'<b> <i> BU ID </i> </b> - <code>{db_user.bu_id}</code>'
                              f'<b> <i> TG ID </i> </b> - <code>{tg_user.id}</code>'
                              f'<b> <i> MESSAGE </i> </b> - {cause}')

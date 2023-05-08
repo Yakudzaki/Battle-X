@@ -11,6 +11,7 @@ from loader import dp
 from states import BombsState
 from utils.db.db_utils import get_user, withdraw_user_balance, deposite_user_balance
 from utils.gen_field import generate_field
+from decimal import Decimal
 
 @dp.message_handler(Text('Минёр 💣'))
 async def minefield(message: types.Message):
@@ -64,7 +65,7 @@ async def game(message: types.Message, state: FSMContext):
         f'<b>❓ Кол-во бомб:</b> <code>{count} шт.</code>\n'
         '➖➖➖➖➖➖➖\n'
         f'<b>💰 Множитель:</b> <code>0x</code>\n'
-        f'<b>💣 Отгадано бомб:</b> <code>0 шт.</code>\n\n'
+        f'<b>💎 Отгадано кристалов:</b> <code>0 шт.</code>\n\n'
         f'<b>💲 Сумма выигрыша:</b> <code>0 ₽</code>\n', reply_markup=generate_field(field))
 
 
@@ -79,7 +80,7 @@ async def game(call: types.CallbackQuery, state: FSMContext):
     if int(cell) == 0:
         field[int(index)] = 2
         await state.update_data(field=field)
-        prize = calculate_ratio(count, field.count(2)) * rate
+        prize = calculate_ratio(count, field.count(2)) * Decimal(str(rate))
         await call.message.edit_text(
             '    <b>Минное поле 💣</b>\n\n'
             '➖➖➖➖➖➖➖\n'
@@ -87,19 +88,19 @@ async def game(call: types.CallbackQuery, state: FSMContext):
             f'<b>❓ Кол-во мин:</b> <code>{count} шт.</code>\n'
             '➖➖➖➖➖➖➖\n'
             f'<b>💰 Множитель:</b> <code>{calculate_ratio(count, field.count(2))}x</code>\n'
-            f'<b>💣 Отгадано бомб:</b> <code>{field.count(2)} шт.</code>\n\n'
+            f'<b>💎 Отгадано кристалов:</b> <code>{field.count(2)} шт.</code>\n\n'
             f'<b>💲 Сумма выигрыша:</b> <code>{format_int(prize)} ₽</code>\n', reply_markup=generate_field(field))
     if int(cell) == 1:
         await state.finish()
         field[int(index)] = 3
         await call.message.edit_text(
-            '.   <b>Минное поле 💣</b>\n\n'
+            '    <b>Минное поле 💣</b>\n\n'
             '➖➖➖➖➖➖➖\n'
             f'<b>💸 Ставка:</b> <code>{format_int(rate)} ₽</code>\n'
             f'<b>❓ Кол-во бомб:</b> <code>{count} шт.</code>\n'
             '➖➖➖➖➖➖➖\n'
             f'<b>💰 Множитель:</b> <code>{calculate_ratio(count, field.count(2))}x</code>\n'
-            f'<b>💣 Отгадано бомб:</b> <code>{field.count(2)} шт.</code>\n'
+            f'<b>💎 Отгадано кристалов:</b> <code>{field.count(2)} шт.</code>\n'
             '➖➖➖➖➖➖➖\n\n'
             '<b>Проигрыш, попробуй снова!</b>', reply_markup=generate_field(field, finish=True))
         await call.message.answer('💣')
@@ -118,6 +119,6 @@ async def game(call: types.CallbackQuery, state: FSMContext):
     prize = ratio * rate
     deposite_user_balance(call.from_user.id, prize)
     balance = get_user(call.from_user.id).balance
-    await call.message.edit_text(f'Вы успешно забрали деньги, +{prize} ₽\n'
+    await call.message.answer(f'Вы успешно забрали деньги, +{prize} ₽\n'
                                  f'Ваш баланс: {format_int(rate)} ₽')
     await state.finish()
