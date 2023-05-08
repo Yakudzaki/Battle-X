@@ -10,4 +10,4 @@ from aiogram.dispatcher import FSMContext
 
 @dp.message_handler(IsAdmin(), Command('admin'))
 async def admin(message: types.Message):
-    await message.reply('Администратор, приветсвую в админ панели', reply_markup=ikb_adm)
+    await message.reply(f'{message.from_user.first_name}, добро пожаловать в админ панель!', reply_markup=ikb_adm)
