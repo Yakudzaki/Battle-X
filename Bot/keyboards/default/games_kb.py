@@ -7,7 +7,7 @@ games = ReplyKeyboardMarkup(row_width=2,
             KeyboardButton(text='Трейд 📊')
         ],
         [
-            KeyboardButton(text='Монетка 💱'),
+            KeyboardButton(text='Монетка 🪙'),
             KeyboardButton(text='Классик 🎫')
         ],
         [
