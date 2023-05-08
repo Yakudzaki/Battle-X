@@ -14,8 +14,8 @@ games = ReplyKeyboardMarkup(row_width=2,
             KeyboardButton(text='Dice ↕️'),
             KeyboardButton(text='Кости 🎲')
         ],
-        [
-            KeyboardButton(text='Эдуль 🔫')
-        ],
+
+
+
     ], input_field_placeholder='Выберите игру', resize_keyboard=True, one_time_keyboard=True
 )
