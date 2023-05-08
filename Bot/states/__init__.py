@@ -1,1 +1,1 @@
-from .states import BombsState
+from .states import BombsState, CoinState

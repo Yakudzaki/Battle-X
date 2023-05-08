@@ -5,3 +5,7 @@ class BombsState(StatesGroup):
     rate = State()
     count = State()
     field = State()
+
+class CoinState(StatesGroup):
+    rate = State()
+    count_guess = State()

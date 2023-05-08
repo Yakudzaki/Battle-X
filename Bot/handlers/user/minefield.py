@@ -12,6 +12,7 @@ from states import BombsState
 from utils.db.db_utils import get_user, withdraw_user_balance, deposite_user_balance
 from utils.gen_field import generate_field
 from decimal import Decimal
+from time import sleep
 
 @dp.message_handler(Text('Минёр 💣'))
 async def minefield(message: types.Message):
@@ -93,6 +94,7 @@ async def game(call: types.CallbackQuery, state: FSMContext):
     if int(cell) == 1:
         await state.finish()
         field[int(index)] = 3
+        balance = get_user(call.from_user.id).balance
         await call.message.edit_text(
             '    <b>Минное поле 💣</b>\n\n'
             '➖➖➖➖➖➖➖\n'
@@ -102,7 +104,8 @@ async def game(call: types.CallbackQuery, state: FSMContext):
             f'<b>💰 Множитель:</b> <code>{calculate_ratio(count, field.count(2))}x</code>\n'
             f'<b>💎 Отгадано кристалов:</b> <code>{field.count(2)} шт.</code>\n'
             '➖➖➖➖➖➖➖\n\n'
-            '<b>Проигрыш, попробуй снова!</b>', reply_markup=generate_field(field, finish=True))
+            '<b>Проигрыш, попробуй снова!</b>\n'
+            f'<b>Ваш баланс: <code>{format_int(balance)} ₽</code></b>', reply_markup=generate_field(field, finish=True))
         await call.message.answer('💣')
 
 
@@ -112,13 +115,27 @@ async def game(call: types.CallbackQuery, state: FSMContext):
     field = data.get('field')
     count = data.get('count')
     rate = data.get('rate')
+    print(field)
     ratio = calculate_ratio(count, field.count(2))
-    if ratio <= 0.5:
-        await call.answer('❌ Вы не можете забрать деньги пока множитель меньше 1x', show_alert=True)
+    if ratio == 0:
+        await call.answer('❌ Нельзя забрать деньги когда множитель равен нулю (0x)', show_alert=True)
         return
-    prize = ratio * rate
+    await state.finish()
+    prize = ratio * Decimal(str(rate))
     deposite_user_balance(call.from_user.id, prize)
     balance = get_user(call.from_user.id).balance
-    await call.message.answer(f'Вы успешно забрали деньги, +{prize} ₽\n'
-                                 f'Ваш баланс: {format_int(rate)} ₽')
-    await state.finish()
+    
+    await call.message.edit_text(
+            '    <b>Минное поле 💣</b>\n\n'
+            '➖➖➖➖➖➖➖\n'
+            f'<b>💸 Ставка:</b> <code>{format_int(rate)} ₽</code>\n'
+            f'<b>❓ Кол-во бомб:</b> <code>{count} шт.</code>\n'
+            '➖➖➖➖➖➖➖\n'
+            f'<b>💰 Множитель:</b> <code>{calculate_ratio(count, field.count(2))}x</code>\n'
+            f'<b>💎 Отгадано кристалов:</b> <code>{field.count(2)} шт.</code>\n'
+            '➖➖➖➖➖➖➖\n\n'
+            f'<b>Вы успешно забрали деньги, <code>+{format_int(prize)} ₽ ({ratio}x)</code></b>\n'
+            f'<b>Ваш обновленный баланс: <code>{format_int(balance)} ₽</code></b>', reply_markup=generate_field(field, finish=True)
+    )
+    await call.message.answer('💎')
+    
