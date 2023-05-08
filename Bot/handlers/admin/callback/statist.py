@@ -8,7 +8,7 @@ async def admin_statistick(call: types.CallbackQuery):
     users_in_bot = get_count_users()
     balance_all_users = get_all_balance()
     await call.message.edit_text(
-        'Статистика 📊\n\n'
-        f'Всего юзеров в боте - <code>{users_in_bot}</code>\n'
-        f'Общий баланс у все юзеров - <code>{balance_all_users}</code>'
+        '📊 <b>Статистика бота</b>\n\n'
+        f'🔢 Всего юзеров в боте - <code>{users_in_bot}</code>\n'
+        f'💸 Общий баланс у все юзеров - <code>{balance_all_users}</code>'
     )
