@@ -4,6 +4,8 @@ from shedulers.tasks import *
 scheduler = AsyncIOScheduler()
 
 
-# scheduler.add_job(example, 'interval', seconds=10) Добавляем таск
-# scheduler.add_job(time, 'interval', seconds=5)
+scheduler.add_job(time, 'interval', seconds=10) 
+
 scheduler.start()
+
+# scheduler.add_job(example, 'data', seconds=10)

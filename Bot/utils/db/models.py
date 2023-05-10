@@ -21,14 +21,12 @@ class Users(Model):
 
 
 class Promocode(Model):
-    id = PrimaryKeyField(unique=True, null=False)
+    id = PrimaryKeyField(unique=True, null=True)
     code = CharField(30, null=False)
     count_activate = IntegerField(null=True)
-    lifetime = DateTimeField(null=True)
     created_at = DateTimeField(default=datetime.now)
 
     class Meta:
-        datebase = db
-        table_name = 'Promocods'
+        database = db
 
-
+db.create_tables([Promocode])

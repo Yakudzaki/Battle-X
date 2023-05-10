@@ -7,7 +7,7 @@ import re
 
 
 async def example():
-    ...
+    print(111)
 
 
 time_dict = {

@@ -34,18 +34,46 @@ async def minefield(message: types.Message):
     await BombsState.rate.set()
 
 @dp.callback_query_handler(lambda m: m.data == 'Мины заново')
-
 async def minefield(call: types.CallbackQuery):
 
     await call.message.answer('💰 Введите вашу ставку', reply_markup=stavka_kb)
 
     await BombsState.rate.set()
 
+
+@dp.callback_query_handler(
+    lambda m: m.data.startswith('Rate'),
+    state=BombsState.rate)
+async def game(call: types.CallbackQuery, state: FSMContext):
+    rate = call.data.split()[1]
+
+    if (not rate.isnumeric()) or (not rate.isascii()):
+        await call.message.answer('<b>⚠️ Введите число!</b>')
+        return
+    
+    elif 10 < int(rate) > 1000:
+        await call.message.answer(
+            '⚠️ Выберите ставку соблюдая ограничения\n'
+            '(От 10 до 1000 ₽)', reply_markup=stavka_kb)
+        return
+
+    if get_user(call.from_user.id).balance < int(rate):
+        await call.message.answer(f'<b>{random.choice(sad_smails)} На вашем балансе не достаточно средств!</b>')
+        return
+
+    withdraw_user_balance(int(call.from_user.id), int(rate))
+
+    await call.message.delete()
+
+    await state.update_data(rate=int(rate))
+    await BombsState.next()
+    await call.message.answer('💣 Выберите кол-во бомб\n (От 3 до 24)', reply_markup=bombs_kb)
+
 @dp.message_handler(state=BombsState.rate)
 async def game(message: types.Message, state: FSMContext):
     rate = message.text
 
-    if not rate.isdigit():
+    if (not rate.isnumeric()) or (not rate.isascii()):
         await message.answer('<b>⚠️ Введите число!</b>')
         return
     
@@ -65,33 +93,42 @@ async def game(message: types.Message, state: FSMContext):
     await BombsState.next()
     await message.answer('💣 Выберите кол-во бомб\n (От 3 до 24)', reply_markup=bombs_kb)
 
-@dp.callback_query_handler(lambda m: m.data.startswith('Bombs'), state=BombsState.rate)
-async def game(message: types.Message, state: FSMContext):
-    rate = message.text
 
-    if not rate.isdigit():
-        await message.answer('<b>⚠️ Введите число!</b>')
-        return
-    
-    elif 10 < int(rate) > 1000:
-        await message.answer(
-            '⚠️ Выберите ставку соблюдая ограничения\n'
-            '(От 10 до 1000 ₽)', reply_markup=stavka_kb)
+@dp.callback_query_handler(lambda m: m.data.startswith('Bombs'), state=BombsState.count)
+async def game(call: types.CallbackQuery, state: FSMContext):
+    count = int(call.data.split()[1])
+
+    if get_user(call.from_user.id).balance < count:
+        await call.message.answer(f'<b>{random.choice(sad_smails)} На вашем балансе не достаточно средств!</b>')
         return
 
-    if get_user(message.from_user.id).balance < int(rate):
-        await message.answer(f'<b>{random.choice(sad_smails)} На вашем балансе не достаточно средств!</b>')
-        return
+    withdraw_user_balance(int(call.from_user.id), count)
 
-    withdraw_user_balance(int(message.from_user.id), int(rate))
+    await call.message.delete()
 
-    await state.update_data(rate=int(message.text))
+    await state.update_data(count=count)
     await BombsState.next()
-    await message.answer('💣 Выберите кол-во бомб\n (От 3 до 24)', reply_markup=bombs_kb)
+    
+    data = await state.get_data()
+    rate = data.get('rate')
+    count = data.get('count')
+    field = generate(count=count)
+
+    await state.update_data(field=field)
+    await call.message.answer(
+        '<b>👾 Игра - Минёр</b>\n\n'
+        '➖➖➖➖➖➖➖\n'
+        f'<b>💸 Ставка:</b> <code>{format_int(rate)} ₽</code>\n'
+        f'<b>💣 Кол-во бомб:</b> <code>{count} шт.</code>\n'
+        '➖➖➖➖➖➖➖\n'
+        f'<b>💰 Множитель:</b> <code>0x</code>\n'
+        f'<b>💎 Отгадано кристалов:</b> <code>0 шт.</code>\n\n'
+        f'<b>🔥 Сумма выигрыша:</b> <code>0 ₽</code>\n', reply_markup=generate_field(field))
+
 
 @dp.message_handler(state=BombsState.count)
 async def game(message: types.Message, state: FSMContext):
-    if not message.text.isdigit():
+    if not message.text.isnumeric():
         await message.answer('<b>⚠️ Введите число!</b>')
         return
 
@@ -118,6 +155,7 @@ async def game(message: types.Message, state: FSMContext):
         f'<b>💰 Множитель:</b> <code>0x</code>\n'
         f'<b>💎 Отгадано кристалов:</b> <code>0 шт.</code>\n\n'
         f'<b>🔥 Сумма выигрыша:</b> <code>0 ₽</code>\n', reply_markup=generate_field(field))
+
 
 @dp.callback_query_handler(lambda m: len(m.data.split()) == 3, state=BombsState.field)
 async def game(call: types.CallbackQuery, state: FSMContext):
