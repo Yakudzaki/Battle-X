@@ -17,5 +17,18 @@ class Users(Model):
     
     class Meta:
         database = db
+        table_name = 'Users'
 
-db.create_tables([Users])
+
+class Promocode(Model):
+    id = PrimaryKeyField(unique=True, null=False)
+    code = CharField(30, null=False)
+    count_activate = IntegerField(null=True)
+    lifetime = DateTimeField(null=True)
+    created_at = DateTimeField(default=datetime.now)
+
+    class Meta:
+        datebase = db
+        table_name = 'Promocods'
+
+

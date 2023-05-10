@@ -10,7 +10,7 @@ markup = ReplyKeyboardMarkup(keyboard=[
         KeyboardButton('📒 Профиль')
     ],
     [
-        KeyboardButton('📚 Помощь')
+        KeyboardButton('📚 Помощь'),
         KeyboardButton('👥 Рефералы')
     ],
 

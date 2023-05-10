@@ -5,13 +5,11 @@ stavka_kb = InlineKeyboardMarkup(row_width=2,
     inline_keyboard=[
 
         [
-
-            InlineKeyboardButton(text='10', callback_data='stavka_10'),
-
-            InlineKeyboardButton(text='50', callback_data='stavka_50'),
-
-            InlineKeyboardButton(text='100', callback_data='stavka_100')
-
+            InlineKeyboardButton(text='💸 10 ₽', callback_data='Rate 10'),
+            InlineKeyboardButton(text='💸 50 ₽', callback_data='Rate 50')
+        ],
+        [
+            InlineKeyboardButton(text='💸 100 ₽', callback_data='Rate 100')
         ],
 
     ]
@@ -19,19 +17,21 @@ stavka_kb = InlineKeyboardMarkup(row_width=2,
 )
 
 bombs_kb = InlineKeyboardMarkup(row_width=2,
-
     inline_keyboard=[
-
         [
-
-            InlineKeyboardButton(text='3', callback_data='bombs_3'),
-
-            InlineKeyboardButton(text='10', callback_data='bombs_10'),
-
-            InlineKeyboardButton(text='24', callback_data='bombs_24')
-
+            InlineKeyboardButton(text='3 💣', callback_data='Bobms 3'),
+            InlineKeyboardButton(text='10 💣', callback_data='Bombs 10'),
+            InlineKeyboardButton(text='24 💣', callback_data='Bombs 24')
         ],
 
     ]
-
 )
+
+
+again_rate = InlineKeyboardMarkup(
+    row_width=3,
+    inline_keyboard=[
+        [
+            InlineKeyboardButton('Оставить ставку такой-же', callback_data='Мины ставка')
+        ]
+    ])

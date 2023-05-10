@@ -25,6 +25,6 @@ def generate_field(field, finish=False):
     if not finish:
         result.append([InlineKeyboardButton('Забрать деньги 💸', callback_data='Мины приз')])
     else:
-        result.append([InlineKeyboardButton('Попробовать снова 🔄', callback_data='Мины заново')])
+        result.append([InlineKeyboardButton('Попробовать снова 🔄', callback_data='Мины заново ')])
     return InlineKeyboardMarkup(inline_keyboard=result)
             
