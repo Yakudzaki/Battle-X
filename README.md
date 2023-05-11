@@ -1,4 +1,4 @@
-# FOYAGAMESBOT 
+# BATTLE-X BOT
 
 This repository contains the source code for a Telegram bot that allows you to play games and earn money. The bot supports multiple payment methods, so you can easily add funds to your account and start playing. You can also cash out your earnings whenever you like.
 
