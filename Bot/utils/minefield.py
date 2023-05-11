@@ -3,7 +3,7 @@ from decimal import Decimal
 
 def calculate_ratio(count_mine, guessed):
     percent = guessed / (25 - count_mine) 
-    return round(Decimal(str(Decimal(str(round(percent, 2))) * Decimal('3.5'))), 2)
+    return round(Decimal(str(Decimal(str(round(percent, 2))) * Decimal('4'))), 2)
 
 
 
