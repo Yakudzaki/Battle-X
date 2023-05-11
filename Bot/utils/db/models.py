@@ -29,4 +29,5 @@ class Promocode(Model):
     class Meta:
         database = db
 
+
 db.create_tables([Promocode])

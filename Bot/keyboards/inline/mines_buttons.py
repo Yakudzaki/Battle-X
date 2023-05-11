@@ -19,7 +19,7 @@ stavka_kb = InlineKeyboardMarkup(row_width=2,
 bombs_kb = InlineKeyboardMarkup(row_width=2,
     inline_keyboard=[
         [
-            InlineKeyboardButton(text='3 💣', callback_data='Bobms 3'),
+            InlineKeyboardButton(text='3 💣', callback_data='Bombs 3'),
             InlineKeyboardButton(text='10 💣', callback_data='Bombs 10'),
             InlineKeyboardButton(text='24 💣', callback_data='Bombs 24')
         ],

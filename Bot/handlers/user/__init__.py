@@ -6,5 +6,7 @@ from .menu import dp
 from .minefield import dp
 from .report import dp
 from .coin import dp
+from .plug import dp
+
 
 __all__ = ['dp']

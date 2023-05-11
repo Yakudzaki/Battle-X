@@ -88,7 +88,7 @@ async def coin(call: types.CallbackQuery, state: FSMContext):
                 f'<b>💸 Ставка:</b> <code>{rate} ₽</code>\n'
                 f'<b>👀 Угаданно:</b> <code>{count} раз</code>\n'
                 '➖➖➖➖➖➖➖\n'
-                f'<b>📈 Множитель:</b> <code>{count * 0.5}x</code>\n\n'
+                f'<b>📉 Множитель:</b> <code>{count * 0.5}x</code>\n\n'
                 f'<b>{random.choice(sad_smails)} Не угадал! Это была решка</b>', reply_markup=coin_kb
             )
     else:
@@ -113,7 +113,7 @@ async def coin(call: types.CallbackQuery, state: FSMContext):
                 f'<b>💸 Ставка:</b> <code>{rate} ₽</code>\n'
                 f'<b>👀 Угаданно:</b> <code>{count} раз</code>\n'
                 '➖➖➖➖➖➖➖\n'
-                f'<b>📈 Множитель:</b> <code>{count * 0.5}x</code>\n\n'
+                f'<b>📉 Множитель:</b> <code>{count * 0.5}x</code>\n\n'
 
                 f'<b>{random.choice(sad_smails)} Не угадал! Это был орел</b>', reply_markup=coin_kb)
 
