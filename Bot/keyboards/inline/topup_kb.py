@@ -2,7 +2,7 @@ from aiogram.types import
 InlineKeyboardMarkup, InlineKeyboardButton 
 
 
-topup_kb = InlineKeyboardMarkup(row_width=1, 
+topup_btns = InlineKeyboardMarkup(row_width=1, 
      inline_keyboard=[ 
          [ 
              InlineKeyboardButton(text='🥝 Qiwi', callback_data='topup_qiwi')
