@@ -14,3 +14,12 @@ ikb_adm = InlineKeyboardMarkup(row_width=2,
         ]
     ]
     )
+
+back_btn = InlineKeyboardMarkup(row_width=1,
+    inline_keyboard=[
+        [
+            InlineKeyboardButton(text='👈 Назад', callback_data='adm back')
+        ]
+
+    ]
+    )
