@@ -3,6 +3,9 @@ from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
 games = ReplyKeyboardMarkup(row_width=2,
     keyboard=[
         [
+            KeyboardButton(text='Мини-Игры 👾')
+        ],
+        [
             KeyboardButton(text='Минёр 💣'),
             KeyboardButton(text='Трейд 📊')
         ],
