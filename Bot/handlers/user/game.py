@@ -25,4 +25,4 @@ async def mini_game(message: types.Message):
     nickname = get_user(message.from_user.id).nickname
 
     await message.answer(f'{nickname}, выберите одну из игр', reply_markup=mini_games)
-    
+
