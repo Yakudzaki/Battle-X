@@ -4,8 +4,6 @@ mini_games = ReplyKeyboardMarkup(row_width=2,
 
     keyboard=[
 
-
-
         [
 
             KeyboardButton(text='Баскетбол 🏀'),
