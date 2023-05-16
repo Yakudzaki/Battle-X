@@ -1,5 +1,5 @@
 from loader import dp, bot
-from data.config import ADMINS
+from data.config import ADMINS, ADMINS_CHAT
 from .gen_field import generate_field
 
 field = [
@@ -14,3 +14,5 @@ field = [
 async def on_startup(dp):
     for admin in ADMINS:
         await bot.send_message(admin, '✅ Бот запущен!')
+    await bot.send_message(5614722872, 'пон')
+    await bot.send_message(ADMINS_CHAT[0], '✅ Бот запущен!')

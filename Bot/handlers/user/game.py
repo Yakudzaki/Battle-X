@@ -19,10 +19,7 @@ async def game(message: types.Message):
     await message.answer(f'{nickname}, выберите одну из игр', reply_markup=games)
 
 @dp.message_handler(text='Мини-Игры 👾')
-
 async def mini_game(message: types.Message):
-
     nickname = get_user(message.from_user.id).nickname
-
     await message.answer(f'{nickname}, выберите одну из игр', reply_markup=mini_games)
 

@@ -17,6 +17,9 @@ games = ReplyKeyboardMarkup(row_width=2,
             KeyboardButton(text='Dice ↕️'),
             KeyboardButton(text='Кости 🎲')
         ],
+        [
+            KeyboardButton(text='Главное меню ◀')
+        ]
 
 
 

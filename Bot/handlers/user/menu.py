@@ -4,6 +4,7 @@ from loguru import logger
 from utils.db.db_utils import get_user
 from keyboards.inline.help_kb import help_adm
 from keyboards.inline.profile_kb import prof_kb
+from keyboards.default.keyboard import markup
 
 
 @dp.message_handler(text='📒 Профиль')
@@ -21,10 +22,6 @@ async def profile_handler(message: types.Message):
 
 
 
-
-
-
-
 @dp.message_handler(text='👥 Рефералы')
 async def referrals_handler(message: types.Message):
     user = get_user(message.from_user.id)
@@ -35,4 +32,6 @@ async def referrals_handler(message: types.Message):
                          '💰 Чем больше людей вы приглашаете - тем больше зарабатываете! Удачи!')
 
 
-
+@dp.message_handler(text='Главное меню ◀')
+async def menu(message: types.Message):
+    await message.answer('Главное меню', reply_markup=markup)

@@ -50,12 +50,6 @@ async def game(call: types.CallbackQuery, state: FSMContext):
     if (not rate.isnumeric()) or (not rate.isascii()):
         await call.message.answer('<b>⚠️ Введите число!</b>')
         return
-    
-    elif 10 < int(rate) > 1000:
-        await call.message.answer(
-            '⚠️ Выберите ставку соблюдая ограничения\n'
-            '(От 10 до 1000 ₽)', reply_markup=stavka_kb)
-        return
 
     if get_user(call.from_user.id).balance < int(rate):
         await call.message.answer(f'<b>{random.choice(sad_smails)} На вашем балансе не достаточно средств!</b>')
@@ -77,7 +71,7 @@ async def game(message: types.Message, state: FSMContext):
         await message.answer('<b>⚠️ Введите число!</b>')
         return
     
-    elif 10 < int(rate) > 1000:
+    if 10 > int(rate) or int(rate) > 1000:
         await message.answer(
             '⚠️ Выберите ставку соблюдая ограничения\n'
             '(От 10 до 1000 ₽)', reply_markup=stavka_kb)
@@ -97,12 +91,6 @@ async def game(message: types.Message, state: FSMContext):
 @dp.callback_query_handler(lambda m: m.data.startswith('Bombs'), state=BombsState.count)
 async def game(call: types.CallbackQuery, state: FSMContext):
     count = int(call.data.split()[1])
-
-    if get_user(call.from_user.id).balance < count:
-        await call.message.answer(f'<b>{random.choice(sad_smails)} На вашем балансе не достаточно средств!</b>')
-        return
-
-    withdraw_user_balance(int(call.from_user.id), count)
 
     await call.message.delete()
 

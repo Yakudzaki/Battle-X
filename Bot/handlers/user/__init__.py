@@ -8,5 +8,9 @@ from .report import dp
 from .coin import dp
 from .plug import dp
 
+from .MiniGames import dp
+
+from .Callback import dp
+
 
 __all__ = ['dp']

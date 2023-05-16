@@ -124,5 +124,6 @@ async def coin(call: types.CallbackQuery, state=FSMContext):
     data = await state.get_data()
     rate = data.get('rate')
     count = data.get('count')
+    await state.finish()
     deposite_user_balance(call.from_user.id, rate * (count * 0.5))
     await call.message.answer(f'{random.choice(right_smails)} Вы успешно забрали выйгрыш, +{rate * (count * 0.5)} ₽')

@@ -19,7 +19,7 @@ def generate_field(field, finish=False):
                 elif a == 1:
                     line.append(InlineKeyboardButton(text=bombs, callback_data=f'Мины {a} {(y * 5 + x) - 1}'))
                 elif a == 2:
-                    line.append(InlineKeyboardButton(text='💎', callback_data=f'Мины {a} {(y * 5 + x) - 1}'))
+                    line.append(InlineKeyboardButton(text='💎', callback_data=f'Plug'))
                 else:
                     line.append(InlineKeyboardButton(text='❌', callback_data=f'Мины {a} {(y * 5 + x) - 1}'))
             result.append(line)
