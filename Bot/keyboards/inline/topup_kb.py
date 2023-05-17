@@ -1,5 +1,4 @@
-from aiogram.types import
-InlineKeyboardMarkup, InlineKeyboardButton 
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton 
 
 
 topup_btns = InlineKeyboardMarkup(row_width=1, 

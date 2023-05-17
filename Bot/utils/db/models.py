@@ -2,7 +2,7 @@ from peewee import *
 from datetime import datetime
 
 # Создание базы данных 
-db = SqliteDatabase('utils/db/database.db')
+db = SqliteDatabase('Bot/utils/db/database.db')
 
 # Создание модели с DateTimeField
 class Users(Model):

@@ -23,7 +23,9 @@ If you have a balance on your account, you can easily withdraw it to your bank a
 
 ## List of Available Games
 
-1. bombs
+1. MineField
+2. Mini-games
+
 
 ## License
 
