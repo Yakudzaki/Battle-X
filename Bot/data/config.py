@@ -16,5 +16,5 @@ ADMINS_CHAT = -1001910573122
 
 # Redis configuration
 
-REDIS_HOST = '127.0.0.1'
+REDIS_HOST = 'localhost'
 REDID_PORT = 6300

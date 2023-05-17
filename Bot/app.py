@@ -1,11 +1,10 @@
 import shedulers, handlers
 
-from aiogram import executor, types
+from aiogram import executor
 from loader import dp, bot
 from loguru import logger
 from utils.db.db_utils import *
 from utils.notify_admins import on_startup
-from utils.db.db_utils import get_all_users
 
 
 if __name__ == '__main__':
