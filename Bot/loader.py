@@ -4,7 +4,7 @@ from aiogram.contrib.fsm_storage.redis import RedisStorage2
 from data import config
 import asyncio
 
-storage = RedisStorage2(host=config.REDIS_HOST, port=config.REDID_PORT)
+storage = RedisStorage2(host=config.REDIS_HOST, port=config.REDIS_PORT, db=1)
 
 
 bot = Bot(token=config.TOKEN, parse_mode=types.ParseMode.HTML)

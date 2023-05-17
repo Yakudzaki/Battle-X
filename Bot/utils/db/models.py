@@ -2,7 +2,7 @@ from peewee import *
 from datetime import datetime
 
 # Создание базы данных 
-db = SqliteDatabase('Bot/utils/db/database.db')
+db = SqliteDatabase('utils/db/database.db')
 
 # Создание модели с DateTimeField
 class Users(Model):
@@ -30,4 +30,6 @@ class Promocode(Model):
         database = db
 
 
-db.create_tables([Promocode])
+class Lotery(Model):
+    user_id = PrimaryKeyField(unique=True, null=True)
+    
