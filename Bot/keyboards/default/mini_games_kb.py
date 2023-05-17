@@ -27,6 +27,10 @@ mini_games = ReplyKeyboardMarkup(row_width=2,
             KeyboardButton(text='Кости 🎲')
 
         ],
+        [
+            KeyboardButton(text='Главное меню ◀')
+        ]
+
 
     ], input_field_placeholder='Выберите игру', resize_keyboard=True, one_time_keyboard=True
 
