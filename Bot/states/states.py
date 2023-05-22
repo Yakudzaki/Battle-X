@@ -9,3 +9,7 @@ class BombsState(StatesGroup):
 class CoinState(StatesGroup):
     rate = State()
     count_guess = State()
+
+class FootBallState(StatesGroup):
+    rate = State()
+    

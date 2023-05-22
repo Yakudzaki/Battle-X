@@ -24,8 +24,7 @@ from decimal import Decimal
 from time import sleep
 
 
-sad_smails = ['😔', '😟', '😢', '😥', '😕', '😪', '😿', '🙁', '☹️', '😓']
-right_smails = ['🎉', '✅', '🥇', '👏', '👍', '🎊', '🥳', '🍾', '👑', '👌']
+from data.config import sad_smails, right_smails
 
 
 @dp.message_handler(Text('Минёр 💣'))
