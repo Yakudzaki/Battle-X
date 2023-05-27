@@ -11,7 +11,7 @@ from aiogram.dispatcher import FSMContext
 from data.config import football_rate, sad_smails, right_smails
 
 
-@dp.message_handler(Text('Футбол ⚽️'))
+@dp.message_handler(text='Футбол ⚽')
 async def football(message: types.Message):
     await message.answer('💰 Введите сумму ставки\n (От 10 до 1000 ₽)', reply_markup=play_rate('⚽️'))
     await FootBallState.rate.set()
